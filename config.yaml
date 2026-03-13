@@ -1,0 +1,22 @@
+gemini:
+  model: "gemini-3-flash-preview"
+
+newsletter:
+  language: "fr"
+  max_highlights: 5
+  default_lookback: "48h"
+  editorial_prompt: "A casual, tech-savvy tone with a focus on practical insights and actionable takeaways."
+
+mail:
+  subject_prefix: "[DayBrief]"
+
+sources:
+  rss:
+    - url: "https://flux.yoandev.co/rss.xml"
+      name: "Flux YoanDev"
+  youtube:
+    - channel_id: "UCRlsJWh1XwmNGxZPFgJ0Zlw"
+      name: "YoanDev"
+  podcasts:
+    - url: "https://feeds.audiomeans.fr/feed/03d88297-85c1-475f-a491-a6c7a443ffca.xml"
+      name: "IFTTD"

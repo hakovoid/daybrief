@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{.Subject}}</title>
+</head>
+<body style="margin:0;padding:0;background-color:#f4f4f7;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f4f7;">
+<tr>
+<td align="center" style="padding:20px 0;">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff;border-radius:8px;overflow:hidden;max-width:600px;width:100%;">
+
+<!-- Header -->
+<tr>
+<td style="background-color:#1a1a2e;padding:32px 40px;text-align:center;">
+<h1 style="color:#ffffff;margin:0;font-size:28px;font-weight:700;letter-spacing:-0.5px;">DayBrief</h1>
+<p style="color:#a0a0b8;margin:8px 0 0;font-size:14px;font-weight:400;">{{.Subject}}</p>
+</td>
+</tr>
+
+<!-- Editorial -->
+<tr>
+<td style="padding:32px 40px 24px;border-bottom:2px solid #f0f0f5;">
+<h2 style="color:#1a1a2e;font-size:20px;margin:0 0 20px;font-weight:700;">Editorial</h2>
+{{paragraphs .Editorial}}
+</td>
+</tr>
+
+<!-- Highlights Header -->
+<tr>
+<td style="padding:28px 40px 16px;">
+<h2 style="color:#1a1a2e;font-size:20px;margin:0;font-weight:700;">Highlights</h2>
+</td>
+</tr>
+
+<!-- Highlights -->
+{{range .Highlights}}
+<tr>
+<td style="padding:0 40px 20px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e8e8ed;border-radius:8px;overflow:hidden;">
+{{if .ThumbnailURL}}
+<tr>
+<td>
+<img src="{{.ThumbnailURL}}" alt="" width="520" style="display:block;width:100%;height:auto;">
+</td>
+</tr>
+{{end}}
+<tr>
+<td style="padding:20px 24px;">
+<h3 style="color:#1a1a2e;font-size:17px;margin:0 0 6px;font-weight:600;">
+<a href="{{.SourceURL}}" style="color:#1a1a2e;text-decoration:none;">{{.Title}}</a>
+</h3>
+<p style="color:#8b8fa3;font-size:12px;margin:0 0 14px;text-transform:uppercase;letter-spacing:0.8px;font-weight:500;">{{.SourceName}}</p>
+<p style="color:#4b5563;font-size:15px;line-height:1.7;margin:0;">{{.Analysis}}</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+{{end}}
+
+<!-- Resources Section -->
+{{if .Resources}}
+<tr>
+<td style="padding:12px 40px 8px;border-top:2px solid #f0f0f5;">
+<h2 style="color:#1a1a2e;font-size:20px;margin:0;font-weight:700;padding-top:16px;">Resources</h2>
+</td>
+</tr>
+{{range .Resources}}
+<tr>
+<td style="padding:10px 40px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-left:3px solid #e8e8ed;padding-left:0;">
+<tr>
+<td style="padding:4px 0 4px 16px;">
+<a href="{{.SourceURL}}" style="color:#2563eb;font-size:15px;font-weight:500;text-decoration:none;">{{.Title}}</a>
+<span style="color:#8b8fa3;font-size:13px;font-weight:400;"> — {{.SourceName}}</span>
+<p style="color:#6b7280;font-size:14px;line-height:1.5;margin:4px 0 0;">{{.Summary}}</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+{{end}}
+{{end}}
+
+<!-- Footer -->
+<tr>
+<td style="padding:28px 40px;text-align:center;border-top:2px solid #f0f0f5;margin-top:20px;">
+<p style="color:#9ca3af;font-size:13px;margin:0;">
+Powered by <a href="https://github.com/yoanbernabeu/daybrief" style="color:#6b7280;text-decoration:underline;">DayBrief</a>
+</p>
+</td>
+</tr>
+
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
