@@ -1,24 +1,57 @@
-# DayBrief
+<p align="center">
+  <img src="web/public/favicon.svg" width="60" alt="DayBrief logo" />
+</p>
 
-An open-source GitHub Action that aggregates content from RSS feeds, YouTube channels, and podcasts, uses the Gemini API to summarize and analyze each source, and sends an automated HTML newsletter by email.
+<h1 align="center">DayBrief</h1>
+
+<p align="center">
+  <strong>AI-powered newsletter from your favorite sources.</strong><br/>
+  Aggregate RSS, YouTube & Podcasts — summarize with Gemini — deliver by email.
+</p>
+
+<p align="center">
+  <a href="https://github.com/yoanbernabeu/daybrief/actions"><img src="https://github.com/yoanbernabeu/daybrief/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
+  <a href="https://github.com/yoanbernabeu/daybrief/releases"><img src="https://img.shields.io/github/v/release/yoanbernabeu/daybrief" alt="Release" /></a>
+  <a href="https://github.com/yoanbernabeu/daybrief/blob/main/LICENSE"><img src="https://img.shields.io/github/license/yoanbernabeu/daybrief" alt="License" /></a>
+  <a href="https://yoanbernabeu.github.io/daybrief"><img src="https://img.shields.io/badge/website-daybrief-blue" alt="Website" /></a>
+</p>
+
+<p align="center">
+  <a href="https://yoanbernabeu.github.io/daybrief">Website</a> &middot;
+  <a href="https://yoanbernabeu.github.io/daybrief/guide/">Setup Guide</a> &middot;
+  <a href="https://yoanbernabeu.github.io/daybrief/admin/">Dashboard</a> &middot;
+  <a href="https://github.com/yoanbernabeu/daybrief/releases">Releases</a>
+</p>
+
+---
+
+## What is DayBrief?
+
+DayBrief is an open-source GitHub Action that monitors your content sources overnight and delivers a concise, AI-generated newsletter every morning. No server to manage — it runs entirely on GitHub Actions.
+
+**How it works:**
+
+1. **Fetch** — Collects new content from RSS feeds, YouTube channels, and podcasts
+2. **Summarize** — Sends each item to Gemini AI for individual analysis
+3. **Synthesize** — Generates a cohesive newsletter with editorial, highlights, and resources
+4. **Deliver** — Sends the newsletter by email via SMTP and archives it as JSON
 
 ## Features
 
-- **Multi-source aggregation**: RSS feeds, YouTube channels, podcasts
-- **AI-powered analysis**: Two-pass Gemini integration (summarize each source, then synthesize a newsletter)
-- **Automated delivery**: HTML email via SMTP
-- **Incremental updates**: Only processes new content since last execution
-- **Zero infrastructure**: Runs entirely in GitHub Actions, no server needed
+- **Multi-source aggregation** — RSS feeds, YouTube channels, podcasts
+- **Two-pass AI analysis** — Individual source summaries, then editorial synthesis via Gemini
+- **Incremental processing** — Only processes content published since the last run
+- **Zero infrastructure** — Runs entirely on GitHub Actions, no server needed
+- **Web dashboard** — Edit config, manage sources, preview newsletters from the browser
+- **Shareable archive** — Public web page to browse past newsletter editions
 
 ## Quick Start
 
-### 1. Create a new repository
+### 1. Create a repository
 
-Create a GitHub repository for your newsletter. This repo will hold your configuration and newsletter history.
+Create a new GitHub repository for your newsletter.
 
 ### 2. Add `config.yaml`
-
-Create a `config.yaml` at the root of your repository to define your sources and newsletter preferences:
 
 ```yaml
 gemini:
@@ -27,7 +60,8 @@ gemini:
 newsletter:
   language: "fr"
   max_highlights: 5
-  editorial_prompt: "A casual, tech-savvy tone with a focus on practical insights."
+  default_lookback: "48h"
+  editorial_prompt: "A casual, tech-savvy tone with practical insights."
 
 mail:
   subject_prefix: "[DayBrief]"
@@ -44,34 +78,41 @@ sources:
       name: "My Podcast"
 ```
 
-| Option | Description |
-|---|---|
-| `gemini.model` | Gemini model to use (default: `gemini-3-flash-preview`) |
-| `newsletter.language` | Newsletter language (default: `en`) |
-| `newsletter.max_highlights` | Number of highlights in the newsletter (default: `5`) |
-| `newsletter.default_lookback` | Time window for first run (default: `48h`) |
-| `newsletter.editorial_prompt` | Tone and style instructions for the AI |
-| `mail.subject_prefix` | Prefix added to email subjects |
+<details>
+<summary><strong>Configuration reference</strong></summary>
+
+| Option | Default | Description |
+|---|---|---|
+| `gemini.model` | `gemini-3-flash-preview` | Gemini model to use |
+| `newsletter.language` | `en` | Newsletter language |
+| `newsletter.max_highlights` | `5` | Number of highlights |
+| `newsletter.default_lookback` | `48h` | Time window for first run |
+| `newsletter.editorial_prompt` | — | Tone and style instructions for the AI |
+| `mail.subject_prefix` | — | Prefix added to email subjects |
+
+</details>
 
 ### 3. Configure secrets
 
-In your repository, go to **Settings > Secrets and variables > Actions** and add:
+Go to **Settings > Secrets and variables > Actions** and add:
 
 | Secret | Required | Description |
 |---|---|---|
 | `GEMINI_API_KEY` | Yes | [Google Gemini API key](https://ai.google.dev/) |
-| `YOUTUBE_API_KEY` | If using YouTube sources | [YouTube Data API key](https://console.cloud.google.com/) |
-| `SMTP_HOST` | Yes | SMTP server host (e.g. `smtp.gmail.com`) |
+| `YOUTUBE_API_KEY` | If YouTube | [YouTube Data API key](https://console.cloud.google.com/) |
+| `SMTP_HOST` | Yes | SMTP server host |
 | `SMTP_PORT` | No | SMTP port (default: `587`) |
 | `SMTP_USERNAME` | Yes | SMTP username |
 | `SMTP_PASSWORD` | Yes | SMTP password |
 | `MAIL_FROM_NAME` | No | Sender name (default: `DayBrief`) |
 | `MAIL_FROM_EMAIL` | Yes | Sender email address |
-| `DAYBRIEF_RECIPIENTS` | Yes | Comma-separated list of recipient emails |
+| `DAYBRIEF_RECIPIENTS` | Yes | Comma-separated recipient emails |
+
+> Need help? See [how to get a Gemini API key](https://yoanbernabeu.github.io/daybrief/guide/gemini-api/) and [free email providers](https://yoanbernabeu.github.io/daybrief/guide/email-providers/).
 
 ### 4. Add the workflow
 
-Create `.github/workflows/daybrief.yml` in your repository:
+Create `.github/workflows/daybrief.yml`:
 
 ```yaml
 name: DayBrief Newsletter
@@ -105,59 +146,76 @@ jobs:
           DAYBRIEF_RECIPIENTS: ${{ secrets.DAYBRIEF_RECIPIENTS }}
 ```
 
-Adjust the cron schedule to your needs. The workflow can also be triggered manually via `workflow_dispatch`.
-
 ### 5. Run it
 
-Go to the **Actions** tab in your repository, select "DayBrief Newsletter", and click **Run workflow** to test it. Once confirmed, the cron schedule will take care of the rest.
+Go to **Actions**, select "DayBrief Newsletter", click **Run workflow**. Once confirmed, the cron schedule handles the rest.
 
-The action automatically commits newsletter output files to `output/` in your repository, which are used to track what content has already been processed (incremental updates).
+The action automatically commits newsletter output to `output/` for incremental processing.
 
 ## Web App
 
-DayBrief includes a static web app (in `web/`) built with Astro 6, deployed on GitHub Pages:
+DayBrief includes a web app built with Astro 6, deployed on GitHub Pages:
 
-- **Landing page** — Project presentation at [yoanbernabeu.github.io/daybrief](https://yoanbernabeu.github.io/daybrief)
-- **Dashboard** — Web UI to edit `config.yaml` visually, manage sources, preview newsletters, and get your shareable URL
-- **Public newsletter page** — Shareable page to browse newsletter archives (e.g. `yoanbernabeu.github.io/daybrief/owner/repo`)
-- **Setup guide** — Step-by-step documentation with Gemini API setup and free email provider recommendations
+| Page | Description |
+|---|---|
+| [Landing](https://yoanbernabeu.github.io/daybrief) | Project presentation |
+| [Dashboard](https://yoanbernabeu.github.io/daybrief/admin/) | Edit config.yaml visually, manage sources, preview newsletters |
+| [Newsletter](https://yoanbernabeu.github.io/daybrief/newsletter/?owner=yoanbernabeu&repo=newsletter) | Public shareable newsletter archive |
+| [Setup Guide](https://yoanbernabeu.github.io/daybrief/guide/) | Step-by-step documentation |
 
 ```bash
 cd web
 npm install
 npm run dev      # Dev server
-npm run build    # Production build → web/dist/
+npm run build    # Production build
 ```
 
 ## CLI Usage
 
-DayBrief can also be used as a standalone CLI tool.
-
-Download the binary from [GitHub Releases](https://github.com/yoanbernabeu/daybrief/releases):
+DayBrief can also run as a standalone CLI.
 
 ```bash
+# Download latest binary
 curl -sL https://github.com/yoanbernabeu/daybrief/releases/latest/download/daybrief-linux-amd64 -o daybrief
 chmod +x daybrief
+
+# Or build from source
+git clone https://github.com/yoanbernabeu/daybrief.git && cd daybrief && make build
 ```
 
-Or build from source:
-
 ```bash
-git clone https://github.com/yoanbernabeu/daybrief.git
-cd daybrief
-make build
-```
-
-Available commands:
-
-```bash
-daybrief run --config config.yaml       # Run the full newsletter pipeline
+daybrief run --config config.yaml       # Run full newsletter pipeline
 daybrief preview --config config.yaml   # Generate and preview in browser
 daybrief sources --config config.yaml   # Check source accessibility
 ```
 
-When running locally, create a `.env` file with the same variables as the GitHub secrets (see `.env.example`).
+When running locally, create a `.env` file with the same variables as the GitHub secrets.
+
+## Architecture
+
+```
+RSS / YouTube / Podcasts
+        │
+        ▼
+   ┌─────────┐     ┌───────────┐     ┌──────────┐     ┌───────┐
+   │  Fetch   │────▶│ Summarize │────▶│Synthesize│────▶│ Email │
+   │ sources  │     │ (Gemini)  │     │(Gemini)  │     │ SMTP  │
+   └─────────┘     └───────────┘     └──────────┘     └───────┘
+                                           │
+                                           ▼
+                                     output/*.json
+```
+
+## Contributing
+
+Contributions are welcome! Please open an issue first to discuss what you'd like to change.
+
+```bash
+make build        # Build binary
+make test         # Run tests
+make lint         # Run linter
+```
 
 ## License
 
-MIT - see [LICENSE](LICENSE) for details.
+[MIT](LICENSE)
