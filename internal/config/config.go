@@ -77,7 +77,7 @@ func Load(path string) (*Config, error) {
 
 	// Set defaults
 	if cfg.Gemini.Model == "" {
-		cfg.Gemini.Model = "gemini-3-pro"
+		cfg.Gemini.Model = "gemini-3-flash-preview"
 	}
 	if cfg.Newsletter.MaxHighlights == 0 {
 		cfg.Newsletter.MaxHighlights = 5

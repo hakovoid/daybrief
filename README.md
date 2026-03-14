@@ -46,7 +46,7 @@ sources:
 
 | Option | Description |
 |---|---|
-| `gemini.model` | Gemini model to use (default: `gemini-3-pro`) |
+| `gemini.model` | Gemini model to use (default: `gemini-3-flash-preview`) |
 | `newsletter.language` | Newsletter language (default: `en`) |
 | `newsletter.max_highlights` | Number of highlights in the newsletter (default: `5`) |
 | `newsletter.default_lookback` | Time window for first run (default: `48h`) |
