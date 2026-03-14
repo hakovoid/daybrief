@@ -47,8 +47,17 @@ The pipeline runs sequentially in `internal/cli/run.go`:
 - `config.yaml` — Sources, Gemini model, newsletter language/tone, mail prefix
 - `.env` — API keys (GEMINI_API_KEY, YOUTUBE_API_KEY), SMTP credentials, recipients (comma-separated DAYBRIEF_RECIPIENTS)
 
+## Pre-push checklist
+
+Before pushing, always run all three checks and fix any issues:
+
+```bash
+make build && make test && make lint
+```
+
 ## Conventions
 
 - Go 1.25+ with `log/slog` for structured logging
+- golangci-lint v2 with config in `.golangci.yml`
 - Gemini responses use `ResponseMIMEType: "application/json"` with explicit JSON schemas
 - The `output/` directory stores newsletter JSON files and serves as the incremental state (last run detection)
