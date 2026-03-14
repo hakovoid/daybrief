@@ -74,8 +74,8 @@ sources:
 		t.Fatalf("Load() error: %v", err)
 	}
 
-	if cfg.Gemini.Model != "gemini-3-pro" {
-		t.Errorf("Default model = %q, want %q", cfg.Gemini.Model, "gemini-3-pro")
+	if cfg.Gemini.Model != "gemini-3-flash-preview" {
+		t.Errorf("Default model = %q, want %q", cfg.Gemini.Model, "gemini-3-flash-preview")
 	}
 	if cfg.Newsletter.MaxHighlights != 5 {
 		t.Errorf("Default MaxHighlights = %d, want 5", cfg.Newsletter.MaxHighlights)
