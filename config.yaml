@@ -12,8 +12,10 @@ mail:
 
 sources:
   rss:
-    - url: "https://flux.yoandev.co/rss.xml"
-      name: "Flux YoanDev"
+    - url: "https://hakovoid-flux.netlify.app/rss.xml"
+      name: "Flux — Francophone"
+    - url: "https://hakovoid-flux.netlify.app/world/rss.xml"
+      name: "Flux — International"
   youtube:
     - channel_id: "UCRlsJWh1XwmNGxZPFgJ0Zlw"
       name: "YoanDev"
