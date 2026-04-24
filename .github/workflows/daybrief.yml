@@ -1,0 +1,31 @@
+name: DayBrief
+
+on:
+  schedule:
+    # 05:00 UTC — apres le fetch de Flux qui tourne a 04:00 UTC.
+    # Laisse une heure pour que Netlify rebuild et serve le nouveau RSS.
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write   # necessaire pour commiter output/*.json
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: yoanbernabeu/daybrief@v1
+        with:
+          config: config.yaml
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          MAIL_FROM_NAME: ${{ secrets.MAIL_FROM_NAME }}
+          MAIL_FROM_EMAIL: ${{ secrets.MAIL_FROM_EMAIL }}
+          DAYBRIEF_RECIPIENTS: ${{ secrets.DAYBRIEF_RECIPIENTS }}
