@@ -25,6 +25,63 @@
 
 ---
 
+## Configuration personnelle (instance hakovoid)
+
+> Cette section décrit la configuration concrète de ce fork. Le reste du README est la doc upstream du projet, conservée pour référence.
+
+### Setup actuel
+
+- **Repo** : `hakovoid/daybrief` — workflow autonome, ne dépend plus de `yoanbernabeu/daybrief` à l'exécution
+- **Cron** : tous les jours à 05:00 UTC
+- **Action** : `uses: hakovoid/daybrief@main` (binaire téléchargé depuis nos propres releases)
+- **Sources** (voir `config.yaml`) :
+  - RSS Flux FR : `https://hakovoid-flux.netlify.app/rss.xml`
+  - RSS Flux World : `https://hakovoid-flux.netlify.app/world/rss.xml`
+  - YouTube : chaîne YoanDev (`UCRlsJWh1XwmNGxZPFgJ0Zlw`)
+  - Podcast : IFTTD
+- **SMTP** : Gmail (avec App Password, 2FA active)
+- **Destinataire** : `(removed)`
+- **Lookback par défaut** : 48h
+- **Modèle Gemini** : `gemini-3-flash-preview`
+
+### Mettre à jour la config
+
+```bash
+cd /path/to/daybrief
+# éditer config.yaml (sources, lookback, ton éditorial…)
+git add config.yaml
+git commit -m "config: <description>"
+git push
+```
+
+### Déclencher manuellement un envoi
+
+```bash
+gh workflow run daybrief.yml --repo hakovoid/daybrief
+gh run list --repo hakovoid/daybrief --workflow daybrief.yml --limit 3
+```
+
+### Mettre à jour un secret
+
+Settings → Secrets and variables → Actions → cliquer sur le secret → Update.
+Ou en CLI : `gh secret set <NAME> --repo hakovoid/daybrief`.
+
+### Documentation interne
+
+Notes complètes dans `internal-notes/` :
+
+- `STATUS.md` — état courant + TODO
+- `flux-et-daybrief-deploiement.md` — tuto complet (Flux + DayBrief + procédure rename)
+- `migration-netlify-vers-cloudflare.md` — plan migration de Flux vers Cloudflare
+
+### Liens utiles
+
+- Workflow : https://github.com/hakovoid/daybrief/actions/workflows/daybrief.yml
+- Releases : https://github.com/hakovoid/daybrief/releases
+- Site Flux source : https://hakovoid-flux.netlify.app
+
+---
+
 ## What is DayBrief?
 
 DayBrief is an open-source GitHub Action that monitors your content sources overnight and delivers a concise, AI-generated newsletter every morning. No server to manage — it runs entirely on GitHub Actions.
