@@ -20,7 +20,7 @@ runs:
     - name: Download DayBrief
       shell: bash
       run: |
-        LATEST=$(curl -s https://api.github.com/repos/yoanbernabeu/daybrief/releases/latest | grep browser_download_url | grep linux-amd64 | cut -d '"' -f 4)
+        LATEST=$(curl -s https://api.github.com/repos/hakovoid/daybrief/releases/latest | grep browser_download_url | grep linux-amd64 | cut -d '"' -f 4)
         curl -sL "$LATEST" -o "${{ github.action_path }}/daybrief"
         chmod +x "${{ github.action_path }}/daybrief"
 

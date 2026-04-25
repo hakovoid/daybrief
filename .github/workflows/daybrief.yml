@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: yoanbernabeu/daybrief@v0.1.0
+      - uses: hakovoid/daybrief@main
         with:
           config: config.yaml
         env:
