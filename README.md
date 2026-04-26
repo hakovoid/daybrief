@@ -40,14 +40,14 @@
   - YouTube : chaîne YoanDev (`UCRlsJWh1XwmNGxZPFgJ0Zlw`)
   - Podcast : IFTTD
 - **SMTP** : Gmail (avec App Password, 2FA active)
-- **Destinataire** : `(removed)`
+- **Destinataire** : (configuré dans le secret `DAYBRIEF_RECIPIENTS`)
 - **Lookback par défaut** : 48h
 - **Modèle Gemini** : `gemini-3-flash-preview`
 
 ### Mettre à jour la config
 
 ```bash
-cd /path/to/daybrief
+# Depuis le repo cloné localement :
 # éditer config.yaml (sources, lookback, ton éditorial…)
 git add config.yaml
 git commit -m "config: <description>"
@@ -65,14 +65,6 @@ gh run list --repo hakovoid/daybrief --workflow daybrief.yml --limit 3
 
 Settings → Secrets and variables → Actions → cliquer sur le secret → Update.
 Ou en CLI : `gh secret set <NAME> --repo hakovoid/daybrief`.
-
-### Documentation interne
-
-Notes complètes dans `internal-notes/` :
-
-- `STATUS.md` — état courant + TODO
-- `flux-et-daybrief-deploiement.md` — tuto complet (Flux + DayBrief + procédure rename)
-- `migration-netlify-vers-cloudflare.md` — plan migration de Flux vers Cloudflare
 
 ### Liens utiles
 
