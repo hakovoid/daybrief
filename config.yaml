@@ -12,9 +12,9 @@ mail:
 
 sources:
   rss:
-    - url: "https://hakovoid-flux.netlify.app/rss.xml"
+    - url: "https://hakovoid-flux.pages.dev/rss.xml"
       name: "Flux — Francophone"
-    - url: "https://hakovoid-flux.netlify.app/world/rss.xml"
+    - url: "https://hakovoid-flux.pages.dev/world/rss.xml"
       name: "Flux — International"
   youtube:
     - channel_id: "UCRlsJWh1XwmNGxZPFgJ0Zlw"
