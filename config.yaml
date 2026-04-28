@@ -4,7 +4,7 @@ gemini:
 newsletter:
   language: "fr"
   max_highlights: 5
-  default_lookback: "48h"
+  default_lookback: "24h"
   editorial_prompt: "A casual, tech-savvy tone with a focus on practical insights and actionable takeaways."
 
 mail:
